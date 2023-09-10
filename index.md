@@ -1,6 +1,7 @@
 ---
 title: TD-Physcomp
 layout: home
+nav_order: 1
 ---
 
 Test page for Tutorials using Touch Designer with Arduino
