@@ -105,8 +105,8 @@ Use ```Serial.print()``` to send a value, the use ```Serial.print()``` again to 
       Serial.print(",");
       Serial.println(turn); // turn
 
-Confirm that the sensors are working by opening the ```Serial Monitor``` and observing the values.  If the values are relatively consistent when the arduino is resting, and relatively smooth chaning when you move the arduino, then you are ready to move on.
-![Serial Monitor Arduino IMU](imgs/serialmonitorIMU.png "Serial Monitor IMU")
+Confirm that the sensors are working by opening the ```Serial Monitor``` and observing the values.  If the values are relatively consistent when the arduino is resting, and relatively smooth changing when you move the arduino, then you are ready to move on.
+![Serial Monitor Arduino IMU](imgs/serialMonitorIMU.png "Serial Monitor IMU")
 
 
 ## TouchDesigner
