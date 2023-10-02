@@ -3,7 +3,8 @@
 This repository will have examples for connecting Arduino to TouchDesigner in a variety of ways including:
 
 - Serial
-- Wifi
+- Wifi 
 - MIDI
+- MQTT
 
 More to come soon ...!
