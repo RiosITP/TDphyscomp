@@ -11,7 +11,7 @@ nav_order: 2
 * [Arduino Serial Setup with IMU](#arduino-serial-w-imu)
 * [TouchDesigner](#touchdesigner)
 * [Selecting and Exporting](#selecting-and-exporting)
-* [Resources](#resources)
+* [Related Resources](#related-resources)
 * [Further Resources](#further-resources)
 
 ## Description
