@@ -166,7 +166,7 @@ Channels will be named based on the header from the ```convert``` DAT. Use a ```
 Use a ```select``` CHOP to split channels into individual CHOPs.  This will make each channel individually routable.
 
 Next connect to one of the premade examples. From here you should be able to see some changes and explore changing values to get different effects.
-![Select CHOP to Example](imgs/select.png "Select CHOP to Example")
+![Select CHOP to Example](../imgs/select.png "Select CHOP to Example")
 
 Try connecting sensors to some of the other examples in the provided .toe file.  The file examples are a hybrid of youtube tutorials (each linked in the file and below) and custom experiments.
 
