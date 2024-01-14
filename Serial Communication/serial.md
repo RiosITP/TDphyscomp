@@ -16,13 +16,13 @@ parent: Serial Communication
 * [Further Resources](#further-resources)
 
 ## Description
-In this example we will use the Arduino Nano 33 IoT's as a controller for visuals in TouchDesigner.  We wil use the Arduino's onboard IMU sensor to get rotational data in the x, y, z axis and send that data to TouchDesigner using Serial Communication.
+In this example we will use the Arduino Nano 33 IoT's as a controller for visuals in TouchDesigner.  We wil use the Arduino's onboard IMU sensor to get rotational data in the x, y, z axis and send that data to TouchDesigner using Serial Communication.  Because the sensor is built into the Nano 33 IoT we will not need any other sensors or peripherals for this example.
 
-This example uses the following hard ware and frameworks
-
-* [TouchDesigner Free Version](https://derivative.ca/download)
-* [Arduino Nano 33 IoT](https://store.arduino.cc/products/arduino-nano-33-iot)
+## Materials and Libraries
+* [Arduino Nano 33 IoT](https://store-usa.arduino.cc/products/arduino-nano-33-iot) (or other Wifi Enabled board, MKR 1010, etc)
 * [Arduino IDE](https://www.arduino.cc/en/software)
+* [TouchDesigner (free version)](https://derivative.ca/)
+* Breadboard, USB cable, Jumper wires
 
 ## Arduino Circuit:
 This example will use the internal IMU sensor.  You can just plug the microcontroller into the breadboard, no extra circuitry is necessary for this tutorial
@@ -96,9 +96,9 @@ In the loop, check if the IMU is ready to read. If it is, grab the values and us
         }
       }
 
-Note the formatting. We will use ```Serial.print()``` and ```Serial.println()``` to send multiple sensor values from the Arduino to Touchdesigner.  The goal is to format everything so that TouchDesigner will interpret all this Arduino as one message containing multiple values where the values are separated by commas.  
+Note the formatting. We will use ```Serial.print()``` and ```Serial.println()``` to send multiple sensor values from the Arduino to Touchdesigner.  The goal is to format everything so that TouchDesigner will interpret the sensor data as one message containing multiple values where the values are separated by commas and terminating with '\r\n' 
 
-Use ```Serial.print()``` to send a value, the use ```Serial.print()``` again to send a _delimiter_. This delimiter should be a non alpha numerical character that will separate each individual value. I'm using commas to separate values.  In TouchDesigner I will eventually have to specify that commas are being used as delimiters (to separate my individual values).  Make sure the last value that you send uses the ```Serial.println()``` function.  This is how TouchDesigner will know that you intend to send a message that contains multiple values.
+Use ```Serial.print()``` to send a value, then use ```Serial.print()``` again to send a _delimiter_. This delimiter should be a non alpha numerical character that will separate each individual value. I'm using commas ( , ) to separate values.  In TouchDesigner I will eventually have to specify that commas are being used as delimiters (to separate my individual values).  Make sure the last value that you send uses the ```Serial.println()``` function.  This is how TouchDesigner will know that you intend to send a message that contains multiple values.
 
       Serial.print(twist);  // twist
       Serial.print(",");    
@@ -156,27 +156,31 @@ Use the follow settings for the ```datTo1``` CHOP:
 
 If everything is formatted correctly the output should look similar to the image below, with each sensor value being shown as a channel in the ```datTo1``` CHOP
 
+
+
+## Label your channels 
+Channels will be named based on the header row from the ```convert``` DAT. Empty rows will be automatically labeled as `chan` + an index number. In this case we see the second and third channels are labeled `chan1` and `chan2`.
+
+Even though it is not necessary in this case, you may want to use a ```rename``` CHOP to change channel names to match the sensors' axes.  
+
 ![Serial Parsed in TD](../imgs/serialConvert1.png "Serial Parsed in TD")
 
-Channels will be named based on the header from the ```convert``` DAT. Use a ```rename``` CHOP to change channel names.  In the ```From``` field you can use an asterisk ```*``` to select all channels in order.  Use the ```To``` field to define your desired channel names.  When renaming, separate each name with a space.
+In the ```From``` field you can use an asterisk ```*``` to select all channels in order.  Use the ```To``` field to define your desired channel names, in this case `x y z`.  When renaming, separate each name with a space. 
 
 ![Rename CHOP](../imgs/rename.png "Rename CHOP")
 
-## Selecting and Exporting
-Use a ```select``` CHOP to split channels into individual CHOPs.  This will make each channel individually routable.
+## Selecting, Mapping, and Exporting
 
-Next connect to one of the premade examples. From here you should be able to see some changes and explore changing values to get different effects.
-![Select CHOP to Example](../imgs/select.png "Select CHOP to Example")
+Once your sensor values are correctly formatted as individual channels in a CHOP you can begin separating, mapping, and parsing those values to control other parameters of your TouchDesigner network such as Audio / Visual effects, UI components, Trigger new behaviors, and much more.
 
-Try connecting sensors to some of the other examples in the provided .toe file.  The file examples are a hybrid of youtube tutorials (each linked in the file and below) and custom experiments.
+Please see the [parsing page](parsing.md) for a few basic strategies and examples of applying your CHOP data.
+
 
 
 ## Related Resources
 * [ITP Physical Computing Site](https://itp.nyu.edu/physcomp/)
 * [ITP Physical Computing IMU Serial Lab](https://itp.nyu.edu/physcomp/labs/lab-serial-imu-output-to-p5-js/)
-* [Elburz Sorkhabi (Interactive Immersive HQ) Particles and Metaballs](https://www.youtube.com/watch?v=FAYpBUBDonY)
-* [Crystal Jow Holiday Point Clouds (Interactive Immersive HQ) ](https://www.youtube.com/watch?v=o0Hli7C1RME)
-* [Crystal Jow Generative Warhol Tutorial (Interactive Immersive HQ) ](https://www.youtube.com/watch?v=KmUUHRzG7UE)
+
 
 ## Further Resources
 * [TouchDesigner Curriculum for Beginners ](https://learn.derivative.ca/)
@@ -187,6 +191,9 @@ Try connecting sensors to some of the other examples in the provided .toe file. 
 * [PPPANIK youtube](https://www.youtube.com/channel/UCWBbakpo_cATqJy9Dzf9x4w)
 * [Paketa12 youtube](https://www.youtube.com/user/paketa12)
 * [alltd.org](https://alltd.org/)
+* [Elburz Sorkhabi (Interactive Immersive HQ) Particles and Metaballs](https://www.youtube.com/watch?v=FAYpBUBDonY)
+* [Crystal Jow Holiday Point Clouds (Interactive Immersive HQ) ](https://www.youtube.com/watch?v=o0Hli7C1RME)
+* [Crystal Jow Generative Warhol Tutorial (Interactive Immersive HQ) ](https://www.youtube.com/watch?v=KmUUHRzG7UE)
 
 
 

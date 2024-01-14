@@ -25,11 +25,11 @@ Topics currently covered are:
 - MIDI Communication
 - UDP over Wifi Communication
 - OSC over Wifi Communicaiton
-- Websockets 
+- Websockets Using Socket.io
 
 
 ## Resources and References
-Please see the [Resources and References](https://riositp.github.io/TDphyscomp/resources) page for resources and refereneces. 
+Most of these examples draw from pre exsiting resources and stand on the work of many open source resources, pre existing examples, libraries, curricula, as well as numerous colleages and friends. Special thank you to the Physical Computing team at ITP/IMA NYU, Tom Igoe's countless examples, and the Immersive Interactive HQ team and contributors.  Please see the [Resources and References](https://riositp.github.io/TDphyscomp/resources) page for a more complete list of resources and refereneces. 
 
 [Just the Docs]: https://just-the-docs.github.io/just-the-docs/
 [GitHub Pages]: https://docs.github.com/en/pages
