@@ -363,6 +363,10 @@ Lastly connect the `math` CHOP to the `null` CHOP from earlier.  Make sure the `
 
 ![Slider to Arduino](../imgs/mathToNull.png?raw=true "Slider to Arduino")
 
+
+If all is set up correctly you should be able to use the button to connect and disconnect with the arduino.  You should see the values being parsed. And you should be able to use the slider to change to change the brightness of the LED all at the same time.
+
+
 ## Related Resources
 * [ITP Physical Computing Site](https://itp.nyu.edu/physcomp/)
 
