@@ -1,7 +1,7 @@
 ---
 title: Resources
 layout: default
-nav_order: 6
+nav_order: 60
 ---
 
 ## Resources and References
