@@ -7,7 +7,9 @@ parent: Serial Communication
 
 # Serial Call and Response w/ Analog Sensors Example
 
-If we want Arduino and Touchdesigner exchange messages back and forth, one way to exchange information is with a Call and Response. Essentially we are telling them to take turns exchanging information.  We'll write code that tells arduino to print sensor values to Touchdesigner, but only if Touchdesigner has first sent a byte to arduino. We later tell Touchdesigner to respond to Arduino, writing out bytes if it has received values.  In this way they will exchange information (bytes) evenly without either ever sending before the other is ready to receive. 
+If we want Arduino and Touchdesigner exchange messages back and forth, one way to exchange information is with a Call and Response. Essentially we are taking turns exchanging information between Arduino and TD.  
+
+We'll write code that tells the Arduino to print sensor values to Touchdesigner, but only if Touchdesigner has first sent a byte to Arduino. We later tell Touchdesigner to respond to Arduino, writing out bytes if it has received values.  In this way they will exchange information (bytes) evenly without either ever sending before the other is ready to receive. 
 
 This example shows the necessary python scripts, DATs, and CHOPs to set up Serial Communication with an Arduino. This example uses the the free version of TouchDesigner 2022.31030 and the Arduino Nano 33 IoT.
 
@@ -104,10 +106,9 @@ Full Code below:
 ## The TouchDesigner Network:
 <!-- ![Serial Communication Network](https://github.com/RiosITP/DILP2022/blob/main/In%20Class%20Examples/Serial/imgs/network.png?raw=true "Network") -->
 
-## Make a button:
-Lets use a button to open and close the Serial port.  Create a ```button``` component (COMP), make sure the "Button Type" parameter is set to Toggle Up. Connect it to a ```null``` CHOP. 
+### Make the button control your port opening:
+Use a button to open and close the Serial port.  Create a ```button``` component (COMP), make sure the "Button Type" parameter is set to Toggle Up. Connect it to a ```null``` CHOP. 
 
-## Make the button control your port opening:
 ![Serial Communication Network](../imgs/buttonNull.png?raw=true "Toggle Button to Null")
 
 Make the ```null``` active and export it to the "Active" parameter of the ```serial``` DAT. Then make your button component active and click it to see if the serial DAT toggles on and off. 
@@ -115,7 +116,7 @@ Make the ```null``` active and export it to the "Active" parameter of the ```ser
 ![Serial Communication Network](../imgs/serialButtonExports.gif?raw=true "Toggle Button to Null")
 
 
-## Send a byte using a script:
+### Send a byte using a script:
 
 Create a ``` CHOP Execute``` DAT.  
 
@@ -144,10 +145,7 @@ Make the chopExec DAT Active and write a python script that will execute when th
 
 Once this is set up, your button will now be configured to open and close the serial port, and initiate communicaton with the Arduino.
 
-
-## Setting up your Serial DAT
-
-### Receive data
+### Serial DAT: Receive data
 Click on the `serial` DAT.  Set the parameters to read incoming information as such:
 
 - `Row/Callback Format`: "One Per Message"
@@ -170,6 +168,8 @@ This value can be constant or changing as long as it is between 0-255. It can al
 
 ![Constant Value](../imgs/constant.png?raw=true "Serial callbacks Dat")
 
+
+### Serial Callback: Send When a Message is Received
 Next activate the `serial_callbacks` scripting DAT.  
 
 ![Serial Callbacks](../imgs/serialCallbacksDat.png?raw=true "Serial callbacks Dat")
@@ -178,7 +178,7 @@ If it is not exposed, click the pink and white arrow icon on the bottom right si
 
 ![Serial Callbacks](../imgs/callbackDropdown.png?raw=true "Serial callbacks Dat")
 
-Next make the `serial_callbacks` DAT active (editable) by clicking it's + icon and edit the `onReceive` function.  This function will execute each time the `serial` DAT receives a byte.
+Make the `serial_callbacks` DAT active (editable) by clicking it's + icon and edit the `onReceive` function.  This function will execute each time the `serial` DAT receives a byte.
 
 Inside the function, make a variable (mine is called "out") and assign it the constant value thats captured in the `null` CHOP you just made.
 
@@ -369,6 +369,7 @@ If all is set up correctly you should be able to use the button to connect and d
 
 ## Related Resources
 * [ITP Physical Computing Site](https://itp.nyu.edu/physcomp/)
+* [ITP Two Way Serial wth p5js](https://itp.nyu.edu/physcomp/labs/labs-serial-communication/lab-two-way-duplex-webserial-communication/)
 
 
 
