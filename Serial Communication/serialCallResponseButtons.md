@@ -12,13 +12,17 @@ If we want Arduino and Touchdesigner exchange messages back and forth, one way t
 This example shows the necessary python scripts, DATs, and CHOPs to set up Serial Communication with an Arduino. This example uses the the free version of TouchDesigner 2022.31030 and the Arduino Nano 33 IoT.
 
 ## Arduino Circuit:
-For this example I'm using a circut with 3 digital inputs.  This can be adjusted for any number of digital inputs.
+For this example I'm using a circut with 3 pushbuttons as my digital inputs.  This can be adjusted for any number of digital inputs. The circut uses the following components:
+ - Arduino Nano 33 IoT
+ - Solderless breadboard
+ - 3 pushbutton switches
+ - Hookup wire / jumper wire
 
 
 ![Breadboard of Arduino Nano 33 IoT with Buttons connected to D2, D3, D4](../imgs/arduinoButtons.png?raw=true "Breadboard Switches")
 
 ## Arduino Code:
-If we want Arduino and Touchdesigner exchange messages back and forth. We'll write code that tells arduino to print sensor values to Touchdesigner, but only if Touchdesigner has first sent a byte to arduino. We later tell touchdesigner to respond to Arduino, only if it has received values. In this way they will exchange information evenly without either ever sending before the other is ready to receive.
+If we want Arduino and Touchdesigner exchange messages back and forth. We'll write code that tells arduino to print sensor values to Touchdesigner, but only if Touchdesigner has first sent a byte to arduino. We later tell Touchdesigner to respond to Arduino, only if it has received values. In this way they will exchange information evenly without either ever sending before the other is ready to receive.
 
 
 To begin, let's set up variables for our sensor values:
@@ -77,8 +81,11 @@ Full Code below:
     int sensor2;
     int sensor3;
 
-    void setup() {
+    void setup(){
         Serial.begin(9600);
+        pinMode(2, INPUT_PULLUP);
+        pinMode(3, INPUT_PULLUP);
+        pinMode(4, INPUT_PULLUP);
     }
 
     void loop() {
@@ -99,63 +106,112 @@ Full Code below:
 
 
 ## The TouchDesigner Network:
-![Serial Communication Network](https://github.com/RiosITP/DILP2022/blob/main/In%20Class%20Examples/Serial/imgs/network.png?raw=true "Network")
+<!-- ![Serial Communication Network](https://github.com/RiosITP/DILP2022/blob/main/In%20Class%20Examples/Serial/imgs/network.png?raw=true "Network") -->
 
-## Make a button:
-Lets use a button to open and close the Serial port.  Create a ```button``` component (COMP), make sure the "Button Type" parameter is set to Toggle Up. Connect it to a ```null``` CHOP. 
+### Make the button control your port opening:
+Use a button to open and close the Serial port.  Create a ```button``` component (COMP), make sure the "Button Type" parameter is set to Toggle Up. Connect it to a ```null``` CHOP. 
 
-## Make the button control your port opening:
 ![Serial Communication Network](../imgs/buttonNull.png?raw=true "Toggle Button to Null")
 
-Make the ```null``` active and export it to the "Active" parameter of the ```serial``` DAT.
+Make the ```null``` active and export it to the "Active" parameter of the ```serial``` DAT. Then make your button component active and click it to see if the serial DAT toggles on and off. 
 
-![Serial Communication Network](../imgs/serialDATexport2.png?raw=true "Toggle Button to Null")
-
-Make your button active and click it to see if the serial DAT toggles on and off.
+![Serial Communication Network](../imgs/serialButtonExports.gif?raw=true "Toggle Button to Null")
 
 
-## Send a byte using a script:
+### Send a byte using a script:
 
 Create a ``` CHOP Execute``` DAT.  
 
-The ```CHOP Execute``` DAT is designed to trigger specific functions whenever the target CHOP channel vlaues has exhibited any of the parameter changes listed (```Off to On```,```While On```,```On to Off```, ```While Off ```,```Value Change```)
+The ```CHOP Execute``` DAT is designed to trigger specific functions whenever the target CHOP channel values have exhibited any of the parameter changes listed: 
+- ```Off to On```
+- ```While On```
+- ```On to Off```
+- ```While Off ```
+- ```Value Change```
 
-For this case we will only use ```Value Change```.  
+For this case we will only use ```Off to On```.  
 
-Make sure the ```Value Change``` parameter is enabled. (A toggle button will only change from 0 to 1 and back)
-Also make sure the `CHOPs` field refers back to the name of the null that your button is connected to, otherwise it won't know what component should be controlling the communication.
+Make sure the ```Off to On``` parameter is enabled. (A toggle button will only change from 0 to 1 and back)
+Also make sure the `CHOPs` field refers back to the name of the null that your button is connected to,  otherwise it won't know what component should be controlling the communication. In this example `null1` is the CHOP connected to the button.
 
-![Serial Communication Network](imgs/chopExecVal.png?raw=true "ChopExecute Script")
+![Serial Communication Network](../imgs/chopExecSettings.png?raw=true "ChopExecute Script")
 
-Make the chopExec DAT Active and write a python script that will send one byte to Arduino when the button goes from off to on (which is simultaneously opening the and closing the serial port):
+Make the chopExec DAT Active and write a python script that will execute when the button goes from off to on. The code below will send one byte (the character 'x') to Arduino when the button is clicked to the on position. Set the `terminator` option to '=' to only send the specified byte and no extra characters. See the [serial DAT reference](https://docs.derivative.ca/SerialDAT_Class) for more info.
 
     def onOffToOn(channel, sampleIndex, val, prev):
         op('serial1').send('x',terminator='=')
-        # print("TD SENDING")
         return
 
 
 ![Serial Communication Network](../imgs/chopExecActive.png?raw=true "ChopExecute Script")
 
-To ensure only one byte gets sent, I am setting the terminator to "=" which means no terminator in TD.  For more info on formatting serial messages, review the [serial DAT reference](https://docs.derivative.ca/SerialDAT_Class)
-Simultaneously use a CHOPExecute DAT to send a byte to arduino when the port is activated.
+Once this is set up, your button will now be configured to open and close the serial port, and initiate communicaton with the Arduino.
 
-## Setup your Serial DAT
+### Serial DAT: Receive data
+Click on the `serial` DAT.  Set the parameters to read incoming information as such:
 
-Click on the `serial` DAT.  I've set the parameters as such:
-
-- Row/Callback Format: "One Per Message"
-- Port: Portnames will differ by computer, it should match what you see in your Arduino IDE (e.g. COM4, usbmodem14201, etc)
-- Baud Rate: 9600
-- Data Bits: 8
-- DTR: Enable
-- RTS: Disable
+- `Row/Callback Format`: "One Per Message"
+- `Port`: Portnames will differ by computer, it should match what you see in your Arduino IDE (e.g. COM4, usbmodem14201, etc)
+- `Baud Rate`: 9600 (Baud should match your arduino Baud)
+- `Data Bits`: 8 (Default)
+- `Parity`: None (Default)
+- `DTR`: Enable (Default)
+- `RTS`: Disable (Default)
 
 ![Serial DAT Settings](../imgs/serialDATsettings.png?raw=true "Serial DAT Settings")
 
+### Send a byte to Arduino
 
-If you already uploaded the Arduino code, and set the DATs up correctly, your DAT should look something like this:
+Create a `constant` CHOP and connect it to a `null` this will eventually be the value to send back to arduino. 
 
+![Constant null](../imgs/constantNull.png?raw=true "Serial callbacks Dat")
+
+This value can be constant or changing as long as it is between 0-255. It can also eventually be used to control the Arduino's outputs.
+
+![Constant Value](../imgs/constant.png?raw=true "Serial callbacks Dat")
+
+
+### Serial Callback: Send When a Message is Received
+Next activate the `serial_callbacks` scripting DAT.  
+
+![Serial Callbacks](../imgs/serialCallbacksDat.png?raw=true "Serial callbacks Dat")
+
+If it is not exposed, click the pink and white arrow icon on the bottom right side of the `serial` DAT
+
+![Serial Callbacks](../imgs/callbackDropdown.png?raw=true "Serial callbacks Dat")
+
+Make the `serial_callbacks` DAT active (editable) by clicking it's + icon and edit the `onReceive` function.  This function will execute each time the `serial` DAT receives a byte.
+
+Inside the function, make a variable (mine is called "out") and assign it the constant value thats captured in the `null` CHOP you just made.
+
+        out = int(op('null2')['chan1'])
+
+Next write an if statement to check and see if TouchDesigner has received a complete message from Arduino.
+
+Arduino is printing an ASCII '\n' after it prints all sensor values.  In decimal format an ASCII '\n' equals byte 10. ( [See the ASCII Table]("https://www.asciitable.com/") )
+
+Based on how we set up the `serial` DAT, TouchDesigner will store the received bytes in an array (the `bytes` parameter of the `onReceive` function).  So if the last byte received by Touchdesigner is equal to 10 that means TD should have received all of the sensor values from arduino. That means we should "request" more values from Arduino, by sending our outgoing byte.
+
+If the last byte is 10, use the `serial1` operator to send a Byte to the Arduino:
+        
+        if bytes[len(bytes)-1] == 10:
+            op('serial1').sendBytes(out)
+            
+
+Full Code for the `serial_callbacks` DAT:
+
+    def onReceive(dat, rowIndex, message, bytes):
+        
+        out = int(op('null2')['chan1'])
+    
+        if bytes[len(bytes)-1] == 10:
+            op('serial1').sendBytes(out)
+        
+        return
+
+![Serial Callbacks](../imgs/serialCallbacks.png?raw=true "Serial callbacks")
+
+Make sure the Arduino code is uploaded, and the DATs are up correctly, then click the button to open the port, and your `serial` DAT should look something like this:
 
 ![Serial DAT](../imgs/serialDAT.png?raw=true "Serial DAT")
 
