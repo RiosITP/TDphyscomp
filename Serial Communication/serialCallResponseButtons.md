@@ -5,13 +5,30 @@ nav_order: 4
 parent: Serial Communication
 ---
 
-# Serial Call and Response Example
+# Serial Call and Response w/ Buttons (Digital Input)
+
+## Sections:
+- [Intro](#introduction) 
+- [Arduino Circuit](#arduino-circuit)
+- [Arduino Code](#arduino-code)
+- [TouchDesigner Network](#the-touchdesigner-network)
+    - [Make a button to Control Port](#make-the-button-control-your-port-opening)
+    - [Send a Byte Using a Script](#send-a-byte-using-a-script)
+    - [Serial DAT: Receiving Data](#serial-dat-receive-data)
+    - [Serial Callback: Sending More data](#serial-callback-send-more-data-when-a-message-is-received)
+- [Control Arduino Output](#control-arduino-physical-outputs-with-td)
+    - [Add an LED to the Circuit](#add-an-led-to-the-arduino-circuit)
+    - [Update Arduino Code](#update-the-arduino-code)
+    - [Add a Control Slider](#add-a-control-slider)
+- [Related Resources](#related-resources)
+
+## Introduction
 
 If we want Arduino and Touchdesigner exchange messages back and forth, one way to exchange information is with a Call and Response. Essentially we are telling them to take turns exchanging information.  We'll write code that tells arduino to print sensor values to Touchdesigner, but only if Touchdesigner has first sent a byte to arduino. We later tell Touchdesigner to respond to Arduino, writing out bytes if it has received values.  In this way they will exchange information (bytes) evenly without either ever sending before the other is ready to receive. 
 
 This example shows the necessary python scripts, DATs, and CHOPs to set up Serial Communication with an Arduino. This example uses the the free version of TouchDesigner 2022.31030 and the Arduino Nano 33 IoT.
 
-## Arduino Circuit:
+## Arduino Circuit
 For this example I'm using a circut with 3 pushbuttons as my digital inputs.  This can be adjusted for any number of digital inputs. The circut uses the following components:
  - Arduino Nano 33 IoT
  - Solderless breadboard
@@ -171,7 +188,7 @@ This value can be constant or changing as long as it is between 0-255. It can al
 ![Constant Value](../imgs/constant.png?raw=true "Serial callbacks Dat")
 
 
-### Serial Callback: Send When a Message is Received
+### Serial Callback: Send More Data When a Message is Received
 Next activate the `serial_callbacks` scripting DAT.  
 
 ![Serial Callbacks](../imgs/serialCallbacksDat.png?raw=true "Serial callbacks Dat")
@@ -213,19 +230,18 @@ Full Code for the `serial_callbacks` DAT:
 
 Make sure the Arduino code is uploaded, and the DATs are up correctly, then click the button to open the port, and your `serial` DAT should look something like this:
 
-![Serial DAT](../imgs/serialDAT.png?raw=true "Serial DAT")
+![Serial DAT](../imgs/serialDATButtons.png?raw=true "Serial DAT")
 
 Once the sensor data is coming in reliably we can connect the output of our `serial` DAT to the input of a `convert` DAT and use the `convert` to separate the values.
 
-![Serial To Convert](../imgs/serialtoConvert.png?raw=true "Serial to Convert")
+![Serial To Convert](../imgs/serialDATButtonsConvert.png?raw=true "Serial to Convert")
 
 The `convert` parameters define how you will reformat the incoming values.  Make sure that you are converting to a table, this will take values and split them into individual cells.  Input a comma ',' in the `split cells at` field to define which delimiters you are using in between values.  You do not need to input '\n', the `serial` DAT takes care of the ending control character.
-
-![Serial To Convert](../imgs/convertSettings.png?raw=true "Convert Settings")
+![Serial To Convert](../imgs/convertSplit.png?raw=true "Convert Settings")
 
 Once we have the values separated, the output of your `convert` to a `DAT to` CHOP. This will turn the split DAT values into a channel (CHOP) format.  Once you have values in a CHOP you can then export and connect as we have in other examples.
 
-![Serial To Convert](../imgs/datto.png?raw=true "dat to CHOP")
+![Serial To Convert](../imgs/serialbuttonDatToFullSetting.png?raw=true "dat to CHOP")
 
 In order to properly sort the information from the `convert` chop, configure the `datto` CHOP parameters as follows:
 - `Select Rows` : by Index
@@ -238,3 +254,136 @@ In order to properly sort the information from the `convert` chop, configure the
 
 ![Serial To Convert](../imgs/dattodetail.png?raw=true "Convert Settings")
 
+## Control Arduino Physical Outputs with TD
+
+Earlier in the tutorial we [sent a byte ](#send-a-byte-to-arduino) to arduino as a way of controling the flow of communication. 
+
+This byte was just a constant value of `1`, however we can edit our circuit, code, and network to use that byte of information to control a physical output, in this case, the brightness of an LED.
+
+### Add an LED to the Arduino Circuit
+Connect a 220 ohm (anything from 220 - 1K Ω should work) to digital pin 2 on the Arduino.  
+
+Note: Any PWM pin on the arduino. PWM pins are marked with `~` symbol. See the [Arduino Nano 33 IoT Pinout Diagram](https://docs.arduino.cc/resources/pinouts/ABX00027-full-pinout.pdf) for full detail.  
+
+![2 Pots Light Sensor LED](../imgs/3buttonLED.png?raw=true "2 way communication circuit")
+
+### Update the Arduino code
+
+Make a global brightness variable for your LED:
+
+    int brightness = 255;
+
+In the setup configure pin 4 as an output using the `pinMode()` function
+
+    pinMode(5, OUTPUT);
+
+In the loop, assign the incoming value to the `brightness` variable. This is value TouchDesigner is sending to arduino. Use the `analogWrite()` function and the `brightness` variable to change the LED's brightness. 
+
+Note: `analogWrite()` only accepts values from 0-255. At 0 the LED will be off at 255 the LED will appear at full brightness. In the next section we'll update TouchDesigner to send the correct range of values.
+
+
+Full Code below:
+
+    int sensor1;
+    int sensor2;
+    int sensor3;
+    int brightness = 255;
+
+    void setup() {
+        Serial.begin(9600);
+        pinMode(2, INPUT_PULLUP);
+        pinMode(3, INPUT_PULLUP);
+        pinMode(4, INPUT_PULLUP);
+        pinMode(5, OUTPUT);
+    }
+
+    void loop() {
+        sensor1 = digitalRead(2);
+        sensor2 = digitalRead(3);
+        sensor3 = digitalRead(4);
+
+        if (Serial.available() > 0) {
+            int incoming = Serial.read();
+           
+            brightness = incoming; // transfer value from TD
+           
+            Serial.print(sensor1);
+            Serial.print(",");
+            Serial.print(sensor2);
+            Serial.print(",");
+            Serial.print(sensor3);
+            Serial.print('\n');
+        }
+
+        analogWrite(5 , brightness); // use brightness to fade LED
+
+    }
+
+
+### Add a Control Slider
+
+Navigate to the `constant` and `null` CHOPs we were using before. 
+
+![Constant null](../imgs/constantNull.png?raw=true "Serial callbacks Dat")
+
+We are going to create a slider to replace the `constant` and send changing values to Arduino.
+
+![Slider](../imgs/mathRangeSliderConnected.png?raw=true "Slider to Select")
+
+
+Add a `slider` COMP and connect it to a `select` CHOP
+
+![Slider](../imgs/slider.png?raw=true "Slider to Select")
+
+Make the slider active, move the slider and look at the range of values it outputs
+![Slider](../imgs/slider.gif?raw=true "Slider gif")
+
+Also notice how the channel name is different from the other CHOP channesl.  Our other CHOPs generate channels named `chan1`,`chan2`, etc, but the slider has generated a channed with the name `v1`. 
+
+To avoid any conflicts with our previous set up, rename the channel in the `select` tab of the `select` CHOP
+
+![Select rename](../imgs/selectRename.png?raw=true "Select rename")
+
+By default TouchDesigner uses normalized values (between 0.0 - 1.0) for nearly all operators.  This means if we want to use the slider to control the brightness of the LED we need to map the slider's range of 0-1 to 0-255 so that it can control the full range of brightness of the LED.
+
+Connect the `select` CHOP to a `math` CHOP
+
+![Slider](../imgs/mathRangeFull.png?raw=true "Slider to Select")
+
+Change the parameters of the `math` CHOP.  First navigate to the `OP` Tab, and look for the `Integer` dropdown.  Select `Round`
+
+![Slider](../imgs/mathInt.png?raw=true "Slider to Select")
+
+Navigate to the `Range` Tab and set the following fields:
+
+ ```From Range:``` minimum to 0, maximum to 1.  This is the incoming range of the slider.
+
+```To Range: 0 255``` minimum to 0, maximum to 255.  This is the outgoing mapped value that we want to send to Arduino.
+
+![Slider](../imgs/mathRange.png?raw=true "Slider to Select")
+
+Make slider active and observe how the range changes:
+
+![Slider](../imgs/mathSlider.gif?raw=true "Slider to Select")
+
+Lastly connect the `math` CHOP to the `null` CHOP from earlier.  Make sure the `constant`CHOP from before is also disconnected.
+
+![Slider to Arduino](../imgs/mathToNull.png?raw=true "Slider to Arduino")
+
+
+If all is set up correctly you should be able to use the button to connect and disconnect with the arduino.  You should see the values being parsed. And you should be able to use the slider to change to change the brightness of the LED all at the same time.
+
+
+## Related Resources
+* [ITP Physical Computing Site](https://itp.nyu.edu/physcomp/)
+* [ITP Two Way Serial wth p5js](https://itp.nyu.edu/physcomp/labs/labs-serial-communication/lab-two-way-duplex-webserial-communication/)
+
+
+
+
+[Just the Docs]: https://just-the-docs.github.io/just-the-docs/
+[GitHub Pages]: https://docs.github.com/en/pages
+[README]: https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md
+[Jekyll]: https://jekyllrb.com
+[GitHub Pages / Actions workflow]: https://github.blog/changelog/2022-07-27-github-pages-custom-github-actions-workflows-beta/
+[use this template]: https://github.com/just-the-docs/just-the-docs-template/generate

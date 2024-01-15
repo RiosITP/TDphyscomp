@@ -5,7 +5,24 @@ nav_order: 5
 parent: Serial Communication
 ---
 
-# Serial Call and Response w/ Analog Sensors Example
+# Serial Call and Response w/ Analog Sensors
+
+## Sections:
+- [Introduction](#introduction) 
+- [Arduino Circuit](#arduino-circuit)
+- [Arduino Code](#arduino-code)
+- [TouchDesigner Network](#the-touchdesigner-network)
+    - [Make a button to Control Port](#make-the-button-control-your-port-opening)
+    - [Send a Byte Using a Script](#send-a-byte-using-a-script)
+    - [Serial DAT: Receiving Data](#serial-dat-receive-data)
+    - [Serial Callback: Sending More data](#serial-callback-send-when-a-message-is-received)
+- [Control Arduino Output](#control-arduino-physical-outputs-with-td)
+    - [Add an LED to the Circuit](#add-an-led-to-the-arduino-circuit)
+    - [Update Arduino Code](#update-the-arduino-code)
+    - [Add a Control Slider](#add-a-control-slider)
+- [Related Resources](#related-resources)
+
+## Introduction
 
 If we want Arduino and Touchdesigner exchange messages back and forth, one way to exchange information is with a Call and Response. Essentially we are taking turns exchanging information between Arduino and TD.  
 
@@ -241,9 +258,9 @@ In order to properly sort the information from the `null` chop, configure the `d
 - `First Row is` : Values
 - `First Column is`: Values
 
-![Serial To Convert](../imgs/nullDatToSettings.png?raw=true "DatTo Settings")
+![Dat Settings](../imgs/dattodetail.png?raw=true "DatTo Settings")
 
-![Serial To Convert](../imgs/datToSettings2.png?raw=true "DatTo Settings")
+![Serial To Convert](../imgs/datto.png?raw=true "DatTo Settings")
 
 
 The `datTo` CHOP should now have 3 channels each representing one of the sensor values. And can be processed or exported to other parts of TD
