@@ -1,0 +1,24 @@
+# To dos and TBDS
+- Serial
+    - One Way To TD Accelerometer Gyro
+    - Two way 
+    - OSC over Serial
+
+- MIDI
+    - Send
+    - Receive
+    - BLE
+    - TDAbleton
+    - Notes for outside devices
+- Websockets
+    - Posenet and p5
+    - Handpose p5
+- WIFI (OSC UDP)
+    - Set up : Wifi / hotspot / Ethernet
+    - UDP Wifi Arduino
+    - OSC Wifi Arduino 
+    - OSC Serial
+    - OSC ZigSim App
+    - OSC Touch OSC
+- MQTT
+    - Shiftr Send Receive

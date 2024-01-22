@@ -9,6 +9,9 @@ parent: MIDI
 
 This example uses the Arduino MIDIUSB library to send and receive MIDI Messages between your microcontroller and TouchDesigner
 
+[Arduino MIDIUSB Library](https://www.arduino.cc/reference/en/libraries/midiusb/)
+
+[Arduino MIDIUSB Write Example](https://github.com/arduino-libraries/MIDIUSB/blob/master/examples/MIDIUSB_write/MIDIUSB_write.ino)
 
 ## Hardware
 

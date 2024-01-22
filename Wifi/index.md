@@ -7,7 +7,8 @@ has_children: true
 
 # Wifi Examples
 
-- [OSC from Arduino to TD]()
+- [OSC Wifi from Arduino to TD]()
+- [OSC Serial from Arduino to TD]()
 - [OSC from Android Zigsim to TD]()
 - [UDP over Wifi]()
 

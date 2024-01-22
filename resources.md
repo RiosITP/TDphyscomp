@@ -10,6 +10,7 @@ Physical Computing and Electronics
  - [Makeability Lab at the University of Washington](https://makeabilitylab.github.io/physcomp/)
  - [Arduino Learning Resources](https://docs.arduino.cc/learn/)
  - [Tom Igoe's Wifi Examples for Arduino](https://tigoe.github.io/Wifi101_examples/)
+ - [Tom Igoe's BLE MIDI Tutorial](https://tigoe.github.io/SoundExamples/midi-ble.html)
  - [Sparkfun Learning Resource](https://learn.sparkfun.com/)
  - [Adafruit Learning System](https://learn.adafruit.com/)
  
@@ -20,12 +21,10 @@ Physical Computing and Electronics
 * [Matthew Ragan's Teaching / Learning Resources](https://matthewragan.com/teaching-resources/touchdesigner/)
 * [PPPANIK youtube](https://www.youtube.com/channel/UCWBbakpo_cATqJy9Dzf9x4w)
 * [Paketa12 youtube](https://www.youtube.com/user/paketa12)
+* [Torin Blankensmith Youtube](https://www.youtube.com/@blankensmithing) and [Github](https://github.com/torinmb)
 * [Bileam Tschepe's (Elekktronaut) youtube](https://www.youtube.com/channel/UCONptu0J1PCrW9YfBtSdqjA)
 * [alltd.org](https://alltd.org/)
 * [OLIB - Components resource / Marketplace](https://olib.amb-service.net/)
-
-
-
 
 Others
 - [p5js JavaScript Library](https://p5js.org/)

@@ -50,9 +50,9 @@ Add Global variables for the Madgwick Filter and the sensor sample rate. This ex
       const float sensorRate = 104.00;
 
       // values for orientation:
-      float twist = 0.0;
-      float tilt = 0.0;
-      float turn = 0.0;
+      float x = 0.0;
+      float y = 0.0;
+      float z = 0.0;
 
 In setup, check if the IMU is running.  If it is enabled, then begin filtering the values
 
@@ -85,27 +85,31 @@ In the loop, check if the IMU is ready to read. If it is, grab the values and us
           filter.updateIMU(xGyro, yGyro, zGyro, xAcc, yAcc, zAcc);
 
           // print the heading, pitch and roll
-          twist = filter.getRoll();
-          tilt = filter.getPitch();
-          turn = filter.getYaw();
-          Serial.print(twist);   // twist
+          
+          x = filter.getPitch();
+          y = filter.getYaw();
+          z = filter.getRoll();
+
+          Serial.print(x);   // tilt up / down
           Serial.print(",");    
-          Serial.print(tilt);    // tilt
+          Serial.print(y);    // turn left /right
           Serial.print(",");
-          Serial.println(turn);  // turn
+          Serial.println(z);  // twist / roll
         }
       }
 
 Note the formatting. We will use ```Serial.print()``` and ```Serial.println()``` to send multiple sensor values from the Arduino to Touchdesigner.  The goal is to format everything so that TouchDesigner will interpret the sensor data as one message containing multiple values where the values are separated by commas and terminating with '\r\n' 
 
 Use ```Serial.print()``` to send a value, then use ```Serial.print()``` again to send a _delimiter_. This delimiter should be a non alpha numerical character that will separate each individual value. I'm using commas ( , ) to separate values.  In TouchDesigner I will eventually have to specify that commas are being used as delimiters (to separate my individual values).  Make sure the last value that you send uses the ```Serial.println()``` function.  This is how TouchDesigner will know that you intend to send a message that contains multiple values.
+```
 
-      Serial.print(twist);  // twist
+      Serial.print(x);   // tilt up / down
       Serial.print(",");    
-      Serial.print(tilt);   // tilt
+      Serial.print(y);    // turn left /right
       Serial.print(",");
-      Serial.println(turn); // turn
-
+      Serial.println(z);  // twist / roll
+      
+```
 Confirm that the sensors are working by opening the ```Serial Monitor``` and observing the values.  If the values are relatively consistent when the arduino is resting, and relatively smooth chaning when you move the arduino, then you are ready to move on.
 ![Serial Monitor Arduino IMU](../imgs/serialmonitorIMU.png "Serial Monitor IMU")
 

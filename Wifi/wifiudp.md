@@ -29,6 +29,8 @@ This example uses and Arduino Nano 33 iot with two potentiometers.  Each potenti
 Your arduino will have to be on the same Wifi network as the computer running TouchDesigner.  Make sure your computer is connected to the Wifi network you wish to use for the project. Have your wifi name and password, and IP of your computer handy.  Follow steps below if you don't have that information
 
 **NOTE:** If you are at ITP / IMA you must [register your device with nyu](https://computer.registration.nyu.edu/) and you must reach out to your professor or ER Manager to gain sandbox access. You will also need your Arduino's MAC Address, which can be found by running the `ScanNetworks` example.  Go to __File -> Examples -> WifiNINA -> ScanNetworks__. Open the Serial Monitor and this sketch will print the MAC address of your Arduino before scanning for available networks.
+![scan network pathway](../imgs/scanAddress.png)
+
 
 If you are on a Mac find your IP by first connecting to your desired network and navigating to `System Preferences` -> `Network` .  IP may be set to dynamic by default so it might change if you are switching networks (eg working from home vs school vs hotspot etc).  
 
