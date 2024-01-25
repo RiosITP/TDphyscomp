@@ -65,7 +65,7 @@ char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as k
 Optional: Make variables for your outgoing ip address the ports over which you'll want to listen and send.
 
 ```
-unsigned int localPort = 2390;      // local port to listen on
+unsigned int localPort = 2390;       // local port to listen on
 unsigned int sendPort = 7403;      // local port to send on
 char outIP[] = "TD.COMPUTER.IP.HERE "; // insert your own computer's IP Address
 ```
