@@ -6,11 +6,11 @@ has_children: true
 ---
 
 # Serial Communication Setup and Notes
-- [One Way Serial Communication: IMU to TD]()
-- [Two Way Serial Communication with Digital Sensors]()
-- [Two Way Serial Communication with Analog Sensors]()
-- [Parsing Digital Information in TD]()
-- [Parsing Analog Information in TD]()
+- [One Way Serial Communication: IMU to TD](https://riositp.github.io/TDphyscomp/Serial%20Communication/serial.html)
+- [Two Way Serial Communication with Digital Sensors](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialCallResponseButtons.html)
+- [Two Way Serial Communication with Analog Sensors](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialCallResponse.html)
+- [Parsing Values in TD](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialParsing.html)
+
 
 
 ## Resources and Inspiration
