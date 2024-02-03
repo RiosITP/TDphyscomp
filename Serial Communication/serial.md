@@ -7,6 +7,8 @@ parent: Serial Communication
 
 # Serial Communication to TouchDesigner With Arduino IMU
 
+## Sections
+
 * [Description](#description)
 * [Arduino Circuit](#arduino-circuit)
 * [Arduino Serial Setup with IMU](#arduino-serial-w-imu)
