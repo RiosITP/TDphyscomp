@@ -20,3 +20,11 @@ Next connect to one of the premade examples. From here you should be able to see
 
 
 ![Select CHOP to Example](../imgs/exportCHOP.gif "Select CHOP to Example")
+
+## Logic Chop Functions
+### Invert
+### Toggle
+### Radio
+### Invert
+
+## Smooth Values using Lag

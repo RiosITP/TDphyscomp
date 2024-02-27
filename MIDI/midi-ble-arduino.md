@@ -7,14 +7,30 @@ parent: MIDI
 
 # TouchDesigner MIDI BLE Control Examples
 
-- MIDI into TD using Arduino & MIDIUSB
-- MIDI into TD using Phone App
-- MIDI out to Ableton Direct
-- MIDI out to Ableton Using TDAbleton Connect
-- MIDI out to Garageband
+## Sections
 
+* [Description](#description)
+* [Arduino Circuit](#arduino-circuit)
+* [Arduino Serial Setup with IMU](#arduino-serial-w-imu)
+* [TouchDesigner](#touchdesigner)
+* [Selecting and Exporting](#selecting-and-exporting)
+* [Resources](#resources)
+* [Further Resources](#further-resources)
+
+## Description
+In this example we will use the Arduino Nano 33 IoT as a MIDI controller in TouchDesigner. The Arduino Nano 33 IoT comes with an onboard bluetooth module.  This Example does not explain the BLE protocol.  Tom Igoe has an excellent write up on BLE and MIDIBLE please have a look a his resources before continuing: https://tigoe.github.io/SoundExamples/midi-ble.html
+
+## Materials and Libraries
+* [Arduino Nano 33 IoT](https://store-usa.arduino.cc/products/arduino-nano-33-iot) (or other Wifi Enabled board, MKR 1010, etc)
+* [Arduino IDE](https://www.arduino.cc/en/software)
+* [ArduinoBLE Library](https://www.arduino.cc/reference/en/libraries/arduinoble/)
+* [TouchDesigner (free version)](https://derivative.ca/)
+* Breadboard, USB cable, Jumper wires
+
+## Arduino Circuit:
 
 ## Hardware
+https://tigoe.github.io/SoundExamples/midi-ble.html
 
 ### Arduino Circuit:
 For this example I'm using a circut with 3 analog inputs.  This can be adjusted for any number of analog or digital inputs.

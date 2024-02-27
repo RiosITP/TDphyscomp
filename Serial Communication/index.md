@@ -9,7 +9,9 @@ has_children: true
 - [One Way Serial Communication: IMU to TD](https://riositp.github.io/TDphyscomp/Serial%20Communication/serial.html)
 - [Two Way Serial Communication with Digital Sensors](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialCallResponseButtons.html)
 - [Two Way Serial Communication with Analog Sensors](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialCallResponse.html)
+- [Parsing Values in Arduino](https://riositp.github.io/TDphyscomp/Serial%20Communication/parsinginArduino.html)
 - [Parsing Values in TD](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialParsing.html)
+
 
 
 
