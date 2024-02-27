@@ -1,5 +1,5 @@
 ---
-title: TD-Physcomp
+title: TD-PhysComp
 layout: home
 nav_order: 1
 ---
