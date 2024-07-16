@@ -117,7 +117,7 @@ Confirm that the sensors are working by opening the ```Serial Monitor``` and obs
 
 
 ## TouchDesigner
-You can download the sample .toe file from this repo and also follow along with the serial set up below
+You can download the .toe file from this repo and also follow along with the serial set up below
 
 Create a serial DAT, it will be turned off, and look like this until you enable it.
 ![Serial Dat Empty](../imgs/serial1empty.png "Serial Dat Empty")

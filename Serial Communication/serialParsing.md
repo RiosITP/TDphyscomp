@@ -31,4 +31,3 @@ Next connect to one of the premade examples. From here you should be able to see
 ### Counter
 
 ## Smooth Values using Lag
-
