@@ -1,7 +1,7 @@
 ---
 title: Serial to TD one way controlling an LED
 layout: default
-nav_order: 4
+nav_order: 3
 parent: Serial Communication
 ---
 

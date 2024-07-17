@@ -1,7 +1,7 @@
 ---
 title: Serial to TD Call and Response Analog
 layout: default
-nav_order: 5
+nav_order: 6
 parent: Serial Communication
 ---
 
