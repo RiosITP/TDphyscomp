@@ -1,5 +1,5 @@
 ---
-title: Serial to TD w/ Arduino IMU
+title: Controlling TD w/ Arduino Gyro (IMU)
 layout: default
 nav_order: 4
 parent: Serial Communication

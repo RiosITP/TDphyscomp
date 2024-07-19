@@ -1,5 +1,5 @@
 ---
-title: Serial from TD one way controlling an LED
+title: Controlling an LED - One-way Communicaiton
 layout: default
 nav_order: 3
 parent: Serial Communication

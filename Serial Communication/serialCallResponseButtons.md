@@ -1,5 +1,5 @@
 ---
-title: Serial to TD Call and Response Digital
+title: Two-way Communicaiton with Digital Sensors
 layout: default
 nav_order: 5
 parent: Serial Communication

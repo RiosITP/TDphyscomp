@@ -1,5 +1,5 @@
 ---
-title: Parsing Serial Values
+title: Filtering Sensor Values With TouchDesigner
 layout: default
 nav_order: 7
 parent: Serial Communication

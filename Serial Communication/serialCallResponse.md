@@ -1,5 +1,5 @@
 ---
-title: Serial to TD Call and Response Analog
+title: Two-way Communicaiton with Analog Sensors
 layout: default
 nav_order: 6
 parent: Serial Communication

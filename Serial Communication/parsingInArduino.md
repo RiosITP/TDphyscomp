@@ -1,5 +1,5 @@
 ---
-title: Parsing Arduino Values in Arduino
+title: Filtering Sensor Values with Arduino
 layout: default
 nav_order: 7
 parent: Serial Communication
