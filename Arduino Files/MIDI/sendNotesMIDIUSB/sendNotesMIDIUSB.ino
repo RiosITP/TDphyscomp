@@ -109,5 +109,4 @@ void loop() {
     }
     pButton3 = button3;
   }
-  // controlChange(0, 10, 65); // Set the value of controller 10 on channel 0 to 65
 }
