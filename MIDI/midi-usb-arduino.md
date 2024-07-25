@@ -45,7 +45,10 @@ Start the sketch by including the [MIDIUSB Library](https://www.arduino.cc/refer
 
 ![Include MIDIUSB Library](../imgs/midilibraryselect.png)
 
-Next open the [MIDIUSB Write Example](https://github.com/arduino-libraries/MIDIUSB/blob/master/examples/MIDIUSB_write/MIDIUSB_write.ino) 
+Next open the [MIDIUSB Write Example](https://github.com/arduino-libraries/MIDIUSB/blob/master/examples/MIDIUSB_write/MIDIUSB_write.ino).
+
+From the menu go to "File" -> "Examples" -> "MIDIUSB" -> "MIDIUSB_write"
+
 
 ![Include MIDIUSB Library](../imgs/midiWriteExampleSelect.png)
 
@@ -116,17 +119,50 @@ Make sure you update your previous button variables (`pButton`) to reflect the d
 
 Use the above strategy for each button.
 
-[See full example code here]()
+[See full example code here](https://github.com/RiosITP/TDphyscomp/blob/main/Arduino%20Files/MIDI/sendNotesMIDIUSB/sendNotesMIDIUSB.ino)
 
+Verfiy your code is working and uploaded before moving on to the next step.
 
 ## TouchDesigner Setup
 
+For the next step make sure your Arduino is already plugged into your computer and running the code from above.
+
+### MIDI Device Mapper Dialog
+Go TouchDesigner's menu and find the MIDI Device Mapper under "Dialogs" -> "MIDI Device Mapper"
+
+When the dialog opens select the Arduino Nano 33 IOT as an `In Device`
+
+
+
 ## TouchDesigner Network
+### Selecting Messages and Notes
+
+![MIDI Device Mapper Dialog Selection](../imgs/midiDeviceMapper.gif)
+
+If you interact with your buttons you should see the MIDI Messages appear in the MIDI Console section of the dialog.  If you are seeing MIDI messages, you are now ready to parse those message in TD.
+![MIDI Device Mapper Dialog Selection](../imgs/midiDeviceMapper2.gif)
+
+![buttons](../imgs/midiinWarduino.gif)
+
+
+![MIDI color](../imgs/midiColor.gif?raw=true)
+
+
+## Add a Potentiometer
+![3 buttons with potentiometer](../imgs/4sensors.png)
+
+### Average the Sensor Valuess
+### Analog State Change
+### Send Control Change
+
+## Use CC to control a graphic in TD
 
 
 ## Related Resources
 * [Matthew Ragan MIDI Tutorials](https://www.youtube.com/watch?v=XLeghJmFBh0&ab_channel=MatthewRagan)
 * [MIDI Notes Chart](https://newt.phys.unsw.edu.au/jw/notes.html)
 * [MIDI CC Number Chart](https://anotherproducer.com/online-tools-for-musicians/midi-cc-list/)
+* [MIDI Monitor Software](https://www.snoize.com/MIDIMonitor/)
+* [MIDI Monitor Browser App](https://www.midimonitor.com/)
 * [ITP Physical Computing Site](https://itp.nyu.edu/physcomp/)
 
