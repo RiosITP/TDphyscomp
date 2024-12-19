@@ -17,7 +17,7 @@ Topics covered
 - [One Way Serial Communication: Using Arduino IMU sensor to control TD](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialIMU.html)  
 - [Two Way Serial Communication with Digital Sensors](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialCallResponseButtons.html)
 - [Two Way Serial Communication with Analog Sensors](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialCallResponse.html)
-- [Parsing and Filtering Values in Arduino](https://riositp.github.io/TDphyscomp/Serial%20Communication/parsinginArduino.html)
+- [Parsing and Filtering Values in Arduino](https://riositp.github.io/TDphyscomp/Serial%20Communication/parsingInArduino.html)
 - [Parsing and Filtering Values in TD](https://riositp.github.io/TDphyscomp/Serial%20Communication/serialParsing.html)
 
 
