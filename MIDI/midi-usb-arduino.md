@@ -134,24 +134,84 @@ When the dialog opens select the Arduino Nano 33 IOT as an `In Device`
 
 
 
+![MIDI Device Mapper Dialog Selection](../imgs/midiDeviceMapper.gif)
+
+If you interact with your buttons you should see the MIDI Messages appear in the MIDI Console section of the dialog.  If you are seeing MIDI messages, you are now ready to parse those messages in TD.  
+
+![MIDI Device Mapper Dialog Selection](../imgs/midiDeviceMapper2.gif)
+
 ## TouchDesigner Network
 ### Selecting Messages and Notes
 
-![MIDI Device Mapper Dialog Selection](../imgs/midiDeviceMapper.gif)
+Once you confirm that TD is receiving MIDI messagaes, close the MIDI Device Mapper. In your network use a `midiIn` CHOP to access incoming MIDI messages.  The `midiIn` CHOP may be blank when you first create it but it should update as you send messages.
 
-If you interact with your buttons you should see the MIDI Messages appear in the MIDI Console section of the dialog.  If you are seeing MIDI messages, you are now ready to parse those message in TD.
-![MIDI Device Mapper Dialog Selection](../imgs/midiDeviceMapper2.gif)
+![buttons](../imgs/midiinWarduino.gif?raw=true)
 
-![buttons](../imgs/midiinWarduino.gif)
+Next try using the incoming information.  This example will use each of the three buttons to control the alpha of an red, green, and blue `constant` TOP, respectively.
 
+Make the `constant` tops and chose whatever colors you like.
+
+Connect your `midiIn` CHOP to a `null` CHOP.  Then export each channel to the alpha parameter of a constant: `chan1` to the alpha parameter of `constant1`,`chan2` to the alpha parameter of `constant2`, `chan3` to the alpha parameter of `constant3`.
+
+Add a `composite` TOP and feed all three `constant` TOPs into the `composite` to see how the colors blend together.  In the `constant` TOP use
 
 ![MIDI color](../imgs/midiColor.gif?raw=true)
 
-
 ## Add a Potentiometer
-![3 buttons with potentiometer](../imgs/4sensors.png)
+![3 buttons with potentiometer](../imgs/4sensors.png?raw=true)
 
-### Average the Sensor Valuess
+Add a potentiometer to the circuit. Connect pin 1 to GND rail, pin 2 to Analog Pin 0 (A0), pin 3 to the 3.3 volt rail.
+
+
+
+### Average the Sensor Values
+  The sensor may not output the exact same values consistently.  If your sensor is noisy, one way to smooth the values is by averaging them.
+
+  Take a small sampling of values and add them up, then divide by the number of samples you took.  Declare global variables for your potentiometer's average ` int potentiometerAverage;` and for the amount of samples you want to use when calculating the average:
+
+
+    int potentiometerAverage;
+    int avgSamples = 25; // try different numbers
+
+  In the loop, declare a variable for the sum of your averaging method . The
+
+    void loop() {
+
+        int total = 0;
+
+        for (int i = 0; i < avgSamples; i++) {
+            total += analogRead(A0);
+        }
+
+        potentiometerAverage = total / avgSamples;
+
+        Serial.println(potentiometerAverage);
+    }
+
+
+## Analog State Change with Noise Reduction
+
+Similar to our [Button State Change](#button-state-change).  There will be times when you want a sensor to trigger something only when the sensor has changed significantly.  D
+
+    int noise = 3;
+    int prevPot;
+
+    void setup() {
+        Serial.begin(9600);
+        prevPot = analogRead(A0);
+    }
+
+    void loop() {
+        // reset total each loop
+        int pot = analogRead(A0);
+
+        if (abs(prevPot - pot) > noise) {
+            Serial.println(pot);
+            prevPot = pot;
+        }
+    }
+
+
 ### Analog State Change
 ### Send Control Change
 
