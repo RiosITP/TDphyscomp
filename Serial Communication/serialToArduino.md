@@ -1,7 +1,7 @@
 ---
 title: Controlling an LED - One-way Communicaiton
 layout: default
-nav_order: 3
+nav_order: 1
 parent: Serial Communication
 ---
 
